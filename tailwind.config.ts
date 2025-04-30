@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,21 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// ComplieX custom colors
+				compliex: {
+					red: '#e94560',
+					'red-dark': '#d41c3c',
+					'red-light': '#ff5e78',
+					dark: '#1A1A2E',
+					'dark-lighter': '#202040',
+					'gray-dark': '#2d2d42',
+					'gray-light': '#535367',
+				},
+			},
+			fontFamily: {
+				mono: ['JetBrains Mono', 'monospace'],
+				sans: ['Inter', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +99,31 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				typing: {
+					'0%': { width: '0' },
+					'50%': { width: '100%' },
+					'100%': { width: '0' }
+				},
+				blink: {
+					'50%': { borderColor: 'transparent' }
+				},
+				fadeIn: {
+					'0%': { opacity: '0', transform: 'translateY(10px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
+				},
+				glow: {
+					'0%, 100%': { boxShadow: '0 0 10px 2px #e9456033' },
+					'50%': { boxShadow: '0 0 20px 5px #e9456066' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				typing: 'typing 4s steps(40) infinite',
+				'cursor-blink': 'blink 1s step-end infinite',
+				fadeIn: 'fadeIn 0.5s ease-out forwards',
+				glow: 'glow 2s ease-in-out infinite'
 			}
 		}
 	},
