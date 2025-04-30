@@ -8,7 +8,7 @@ import {
   LineChart, 
   Briefcase, 
   GraduationCap, 
-  Ai 
+  Bot 
 } from 'lucide-react';
 
 const Features: React.FC = () => {
@@ -44,7 +44,7 @@ const Features: React.FC = () => {
       description: "Access structured learning paths with lessons, quizzes, and progress tracking to build your programming knowledge."
     },
     {
-      icon: Ai,
+      icon: Bot,
       title: "AI Assistant",
       description: "Get help with coding queries, code reviews, language conversion, and algorithm concepts with our built-in AI assistant."
     }
