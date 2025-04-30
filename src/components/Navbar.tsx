@@ -19,8 +19,8 @@ const Navbar: React.FC = () => {
           <Link to="/#features" className="text-sm text-gray-300 hover:text-white transition-colors">Features</Link>
           <Link to="/leaderboard" className="text-sm text-gray-300 hover:text-white transition-colors">Leaderboard</Link>
           <Link to="/jobs" className="text-sm text-gray-300 hover:text-white transition-colors">Jobs</Link>
+          <Link to="/practice" className="text-sm text-gray-300 hover:text-white transition-colors">Practice</Link>
           <Link to="#" className="text-sm text-gray-300 hover:text-white transition-colors">Learn</Link>
-          <Link to="#" className="text-sm text-gray-300 hover:text-white transition-colors">Practice</Link>
         </div>
         
         <div className="flex items-center gap-3">
