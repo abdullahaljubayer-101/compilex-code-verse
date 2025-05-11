@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BookOpen, BookText, BookCheck, Search, Filter } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,10 +7,12 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import Navbar from '@/components/Navbar';
 
 const Learn: React.FC = () => {
   return (
     <div className="min-h-screen bg-compliex-dark">
+      <Navbar />
       {/* Page header */}
       <div className="pt-24 pb-8 px-4 md:px-8">
         <div className="container mx-auto max-w-7xl">
