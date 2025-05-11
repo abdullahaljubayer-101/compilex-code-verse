@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Code, BookOpen, Terminal, CheckCircle, Trophy, Clock, Zap, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { Link } from 'react-router-dom';
 
 interface Challenge {
   id: number;
@@ -136,6 +136,8 @@ const ChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
         <Button 
           variant="default" 
           className="w-full bg-compliex-red hover:bg-compliex-red-dark text-white mt-2"
+          as={Link}
+          to={`/practice/problem/${challenge.id}`}
         >
           Start Challenge <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
@@ -194,7 +196,7 @@ const Practice: React.FC = () => {
                 <span className="text-gray-400">Progress to next level</span>
                 <span className="text-white">650/1000 XP</span>
               </div>
-              <Progress value={65} className="h-2 bg-compliex-gray-dark" indicatorClassName="bg-compliex-red" />
+              <Progress value={65} className="h-2 bg-compliex-gray-dark" />
             </div>
             
             <div className="flex gap-6 text-center">

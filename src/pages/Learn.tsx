@@ -8,8 +8,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Navbar from '@/components/Navbar';
+import { Link, useLocation } from 'react-router-dom';
 
 const Learn: React.FC = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const defaultTab = searchParams.get('tab') || 'paths';
+
   return (
     <div className="min-h-screen bg-compliex-dark">
       <Navbar />
@@ -70,7 +75,7 @@ const Learn: React.FC = () => {
       {/* Main content */}
       <div className="px-4 md:px-8 pb-16">
         <div className="container mx-auto max-w-7xl">
-          <Tabs defaultValue="paths" className="w-full">
+          <Tabs defaultValue={defaultTab} className="w-full">
             <TabsList className="bg-compliex-dark-lighter border border-compliex-gray-dark w-full md:w-auto justify-start mb-4">
               <TabsTrigger value="paths">Learning Paths</TabsTrigger>
               <TabsTrigger value="courses">Courses</TabsTrigger>
@@ -254,6 +259,7 @@ const CourseCard: React.FC<{ course: Course }> = ({ course }) => {
 };
 
 type Tutorial = {
+  id: string;
   title: string;
   description: string;
   readTime: string;
@@ -265,7 +271,14 @@ const TutorialCard: React.FC<{ tutorial: Tutorial }> = ({ tutorial }) => {
   return (
     <Card className="bg-compliex-dark-lighter border-compliex-gray-dark hover:border-compliex-red/50 transition-all">
       <CardHeader>
-        <CardTitle className="text-white text-xl">{tutorial.title}</CardTitle>
+        <CardTitle className="text-white text-xl">
+          <Link 
+            to={`/learn/tutorial/${tutorial.id}`}
+            className="hover:text-compliex-red transition-colors"
+          >
+            {tutorial.title}
+          </Link>
+        </CardTitle>
         <div className="flex justify-between text-xs text-gray-400">
           <span>{tutorial.date}</span>
           <span>{tutorial.readTime} read</span>
@@ -280,6 +293,14 @@ const TutorialCard: React.FC<{ tutorial: Tutorial }> = ({ tutorial }) => {
             </Badge>
           ))}
         </div>
+        <Button 
+          variant="link" 
+          className="text-compliex-red px-0 mt-2"
+          as={Link}
+          to={`/learn/tutorial/${tutorial.id}`}
+        >
+          Read Tutorial
+        </Button>
       </CardContent>
     </Card>
   );
@@ -378,6 +399,7 @@ const allCourses: Course[] = [
 
 const tutorials: Tutorial[] = [
   {
+    id: '1',
     title: "Building a REST API with Node.js and Express",
     description: "Learn how to create a RESTful API using Node.js, Express, and MongoDB to power your web applications.",
     readTime: "15 min",
@@ -385,6 +407,7 @@ const tutorials: Tutorial[] = [
     tags: ["Node.js", "Express", "API"]
   },
   {
+    id: '2',
     title: "CSS Grid Layout Mastery",
     description: "Master CSS Grid Layout to create complex, responsive web layouts with less code and more flexibility.",
     readTime: "12 min",
@@ -392,6 +415,7 @@ const tutorials: Tutorial[] = [
     tags: ["CSS", "Frontend", "Layout"]
   },
   {
+    id: '3',
     title: "Understanding JavaScript Closures",
     description: "Dive deep into JavaScript closures, how they work, and how to use them effectively in your code.",
     readTime: "10 min",
@@ -399,6 +423,7 @@ const tutorials: Tutorial[] = [
     tags: ["JavaScript", "Programming"]
   },
   {
+    id: '4',
     title: "Git Workflow for Teams",
     description: "Learn efficient Git workflows for collaboration in development teams, including branching strategies and code reviews.",
     readTime: "18 min",
@@ -406,6 +431,7 @@ const tutorials: Tutorial[] = [
     tags: ["Git", "DevOps", "Collaboration"]
   },
   {
+    id: '5',
     title: "Deploying React Apps with GitHub Actions",
     description: "Set up continuous deployment for React applications using GitHub Actions to automate your build and deployment process.",
     readTime: "14 min",
@@ -413,6 +439,7 @@ const tutorials: Tutorial[] = [
     tags: ["React", "CI/CD", "DevOps"]
   },
   {
+    id: '6',
     title: "Building Accessible Web Forms",
     description: "Create inclusive, accessible web forms that comply with WCAG guidelines and provide a better user experience for all.",
     readTime: "16 min",
