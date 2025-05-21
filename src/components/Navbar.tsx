@@ -24,12 +24,14 @@ const Navbar: React.FC = () => {
         </div>
         
         <div className="flex items-center gap-3">
-          <Button variant="ghost" className="text-gray-300 hover:text-white hidden md:flex">
-            Sign In
+          <Button variant="ghost" className="text-gray-300 hover:text-white hidden md:flex" asChild>
+            <Link to="/signin">Sign In</Link>
           </Button>
-          <Button className="bg-compliex-red hover:bg-compliex-red-dark text-white">
-            <User className="h-4 w-4 mr-2" />
-            Sign Up
+          <Button className="bg-compliex-red hover:bg-compliex-red-dark text-white" asChild>
+            <Link to="/signup">
+              <User className="h-4 w-4 mr-2" />
+              Sign Up
+            </Link>
           </Button>
         </div>
       </div>
