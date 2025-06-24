@@ -13,6 +13,7 @@ import ProblemDetail from "./pages/ProblemDetail";
 import TutorialDetail from "./pages/TutorialDetail";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import Account from "./pages/Account";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/learn/tutorial/:id" element={<TutorialDetail />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/account" element={<Account />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />

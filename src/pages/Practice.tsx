@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Code, BookOpen, Terminal, CheckCircle, Trophy, Clock, Zap, ArrowRight } from 'lucide-react';
+import { Code, BookOpen, Terminal, CheckCircle, Trophy, Clock, Zap, ArrowRight, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -135,11 +135,13 @@ const ChallengeCard: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
       <CardFooter>
         <Button 
           variant="default" 
-          className="w-full bg-compliex-red hover:bg-compliex-red-dark text-white mt-2"
-          as={Link}
-          to={`/practice/problem/${challenge.id}`}
+          className="bg-compliex-red hover:bg-compliex-red-dark text-white"
+          asChild
         >
-          Start Challenge <ArrowRight className="ml-2 h-4 w-4" />
+          <Link to={`/practice/problem/${challenge.id}`}>
+            Start Challenge
+            <ChevronRight className="ml-2 h-4 w-4" />
+          </Link>
         </Button>
       </CardFooter>
     </Card>
