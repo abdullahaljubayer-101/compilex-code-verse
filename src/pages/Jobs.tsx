@@ -1,12 +1,14 @@
 
 import React, { useState } from 'react';
-import { BriefcaseBusiness, Search, HardDriveDownload } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { BriefcaseBusiness, Search, HardDriveDownload, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useToast } from '@/hooks/use-toast';
 
 interface Job {
   id: number;
@@ -88,48 +90,89 @@ const jobs: Job[] = [
   }
 ];
 
-const JobCard: React.FC<{ job: Job }> = ({ job }) => (
-  <Card className="bg-compliex-dark-lighter border-compliex-gray-dark hover:border-compliex-red transition-colors mb-4">
-    <CardHeader className="pb-3">
-      <div className="flex justify-between items-start">
-        <div>
-          <CardTitle className="text-xl text-white">{job.title}</CardTitle>
-          <CardDescription className="text-gray-400">
-            {job.company} • {job.location}
-          </CardDescription>
+const JobCard: React.FC<{ job: Job; appliedJobs: number[]; onApply: (jobId: number) => void }> = ({ job, appliedJobs, onApply }) => {
+  const hasApplied = appliedJobs.includes(job.id);
+  
+  return (
+    <Card className="bg-compliex-dark-lighter border-compliex-gray-dark hover:border-compliex-red transition-colors mb-4">
+      <CardHeader className="pb-3">
+        <div className="flex justify-between items-start">
+          <div>
+            <CardTitle className="text-xl text-white">
+              <Link to={`/jobs/${job.id}`} className="hover:text-compliex-red transition-colors">
+                {job.title}
+              </Link>
+            </CardTitle>
+            <CardDescription className="text-gray-400">
+              {job.company} • {job.location}
+            </CardDescription>
+          </div>
+          <div className="flex flex-col items-end gap-2">
+            <span className="text-sm bg-compliex-gray-dark/60 text-white px-3 py-1 rounded-full">{job.type}</span>
+            {job.salary && <span className="text-sm text-compliex-red">{job.salary}</span>}
+            {hasApplied && (
+              <div className="flex items-center gap-1 text-green-500 text-xs">
+                <CheckCircle className="h-3 w-3" />
+                <span>Applied</span>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex flex-col items-end">
-          <span className="text-sm bg-compliex-gray-dark/60 text-white px-3 py-1 rounded-full">{job.type}</span>
-          {job.salary && <span className="text-sm text-compliex-red mt-2">{job.salary}</span>}
+      </CardHeader>
+      <CardContent>
+        <div className="flex items-center gap-1 mb-3 text-sm text-gray-400">
+          <span>Experience:</span>
+          <span className="bg-compliex-dark/80 px-2 py-0.5 rounded text-white">{job.level}</span>
         </div>
-      </div>
-    </CardHeader>
-    <CardContent>
-      <div className="flex items-center gap-1 mb-3 text-sm text-gray-400">
-        <span>Experience:</span>
-        <span className="bg-compliex-dark/80 px-2 py-0.5 rounded text-white">{job.level}</span>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {job.skills.map((skill, i) => (
-          <span key={i} className="bg-compliex-dark/80 text-gray-300 px-3 py-1 rounded-full text-xs">
-            {skill}
-          </span>
-        ))}
-      </div>
-    </CardContent>
-    <CardFooter className="flex justify-between border-t border-compliex-gray-dark pt-3 mt-2">
-      <span className="text-xs text-gray-400">Posted on {new Date(job.postedAt).toLocaleDateString()}</span>
-      <Button variant="outline" size="sm" className="text-gray-300 hover:text-white hover:bg-compliex-red hover:border-compliex-red">
-        Apply Now
-      </Button>
-    </CardFooter>
-  </Card>
-);
+        <div className="flex flex-wrap gap-2">
+          {job.skills.map((skill, i) => (
+            <span key={i} className="bg-compliex-dark/80 text-gray-300 px-3 py-1 rounded-full text-xs">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-between border-t border-compliex-gray-dark pt-3 mt-2">
+        <span className="text-xs text-gray-400">Posted on {new Date(job.postedAt).toLocaleDateString()}</span>
+        <div className="flex gap-2">
+          <Button variant="ghost" size="sm" className="text-gray-300 hover:text-white" asChild>
+            <Link to={`/jobs/${job.id}`}>View Details</Link>
+          </Button>
+          {hasApplied ? (
+            <Button variant="outline" size="sm" disabled className="text-green-500 border-green-500 cursor-not-allowed">
+              <CheckCircle className="h-3 w-3 mr-1" />
+              Applied
+            </Button>
+          ) : (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="text-gray-300 hover:text-white hover:bg-compliex-red hover:border-compliex-red"
+              onClick={() => onApply(job.id)}
+            >
+              Apply Now
+            </Button>
+          )}
+        </div>
+      </CardFooter>
+    </Card>
+  );
+};
 
 const Jobs: React.FC = () => {
+  const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [appliedJobs, setAppliedJobs] = useState<number[]>([]);
+  
+  const handleApply = (jobId: number) => {
+    setAppliedJobs(prev => [...prev, jobId]);
+    toast({
+      title: "Application submitted!",
+      description: "Your application has been sent to the employer.",
+    });
+  };
   
   const filteredJobs = jobs.filter(job => {
     const matchesSearch = 
@@ -239,6 +282,11 @@ const Jobs: React.FC = () => {
               <div className="text-white flex items-center">
                 <BriefcaseBusiness className="mr-2 text-compliex-red" />
                 <span className="font-medium">{filteredJobs.length} {filteredJobs.length === 1 ? 'job' : 'jobs'} found</span>
+                {appliedJobs.length > 0 && (
+                  <span className="ml-4 text-green-500 text-sm">
+                    • {appliedJobs.length} applied
+                  </span>
+                )}
               </div>
               <Button variant="outline" className="text-gray-400" size="sm">
                 <HardDriveDownload className="mr-1 h-4 w-4" /> Export
@@ -248,7 +296,7 @@ const Jobs: React.FC = () => {
             {filteredJobs.length > 0 ? (
               <div className="space-y-4">
                 {filteredJobs.map(job => (
-                  <JobCard key={job.id} job={job} />
+                  <JobCard key={job.id} job={job} appliedJobs={appliedJobs} onApply={handleApply} />
                 ))}
               </div>
             ) : (

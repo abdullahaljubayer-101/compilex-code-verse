@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Code, User } from 'lucide-react';
+import { Code, User, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -63,8 +62,11 @@ const Navbar: React.FC = () => {
                 <DropdownMenuItem className="text-gray-300 hover:text-white hover:bg-compliex-gray-dark" asChild>
                   <Link to="/account">Account</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-gray-300 hover:text-white hover:bg-compliex-gray-dark">
-                  Settings
+                <DropdownMenuItem className="text-gray-300 hover:text-white hover:bg-compliex-gray-dark" asChild>
+                  <Link to="/settings">
+                    <Settings className="h-4 w-4 mr-2" />
+                    Settings
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-compliex-gray-dark" />
                 <DropdownMenuItem 

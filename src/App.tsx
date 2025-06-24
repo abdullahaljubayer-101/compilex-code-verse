@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Leaderboard from "./pages/Leaderboard";
 import Jobs from "./pages/Jobs";
+import JobDetail from "./pages/JobDetail";
 import Practice from "./pages/Practice";
 import Learn from "./pages/Learn";
 import ProblemDetail from "./pages/ProblemDetail";
@@ -14,6 +15,7 @@ import TutorialDetail from "./pages/TutorialDetail";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Account from "./pages/Account";
+import Settings from "./pages/Settings";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
@@ -32,6 +34,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/jobs" element={<Jobs />} />
+          <Route path="/jobs/:id" element={<JobDetail />} />
           <Route path="/practice" element={<Practice />} />
           <Route path="/practice/problem/:id" element={<ProblemDetail />} />
           <Route path="/learn" element={<Learn />} />
@@ -39,6 +42,7 @@ const App = () => (
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
