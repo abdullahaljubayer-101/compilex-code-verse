@@ -12,6 +12,7 @@ import Practice from "./pages/Practice";
 import Learn from "./pages/Learn";
 import ProblemDetail from "./pages/ProblemDetail";
 import TutorialDetail from "./pages/TutorialDetail";
+import CourseDetail from "./pages/CourseDetail";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Account from "./pages/Account";
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/practice/problem/:id" element={<ProblemDetail />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/learn/tutorial/:id" element={<TutorialDetail />} />
+          <Route path="/learn/course/:id" element={<CourseDetail />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/account" element={<Account />} />
