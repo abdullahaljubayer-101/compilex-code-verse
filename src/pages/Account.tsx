@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import { User, Mail, Calendar, Trophy, BookOpen, Code, Settings, LogOut } from 'lucide-react';
+import { User, Mail, Calendar, Trophy, BookOpen, Code, Settings, LogOut, Briefcase, FileText, Clock, CheckCircle, XCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -30,6 +31,98 @@ const Account: React.FC = () => {
     { type: "problem", title: "Binary Tree Traversal", difficulty: "Medium", date: "2 days ago", points: 150 },
     { type: "problem", title: "Merge Sort Implementation", difficulty: "Hard", date: "3 days ago", points: 200 },
   ];
+
+  // Mock job applications data
+  const jobApplications = [
+    {
+      id: 1,
+      jobTitle: "Senior Frontend Developer",
+      company: "TechCorp Inc.",
+      appliedDate: "2024-01-15",
+      status: "Under Review",
+      location: "San Francisco, CA"
+    },
+    {
+      id: 2,
+      jobTitle: "Full Stack Engineer",
+      company: "StartupXYZ",
+      appliedDate: "2024-01-12",
+      status: "Interview Scheduled",
+      location: "Remote"
+    },
+    {
+      id: 3,
+      jobTitle: "React Developer",
+      company: "WebSolutions LLC",
+      appliedDate: "2024-01-10",
+      status: "Rejected",
+      location: "New York, NY"
+    }
+  ];
+
+  // Mock created problems data
+  const createdProblems = [
+    {
+      id: 1,
+      title: "Array Rotation Algorithm",
+      difficulty: "Medium",
+      submittedDate: "2024-01-18",
+      status: "Approved",
+      views: 156,
+      solves: 23
+    },
+    {
+      id: 2,
+      title: "Binary Search Tree Validation",
+      difficulty: "Hard",
+      submittedDate: "2024-01-16",
+      status: "Pending Review",
+      views: 0,
+      solves: 0
+    },
+    {
+      id: 3,
+      title: "String Palindrome Check",
+      difficulty: "Easy",
+      submittedDate: "2024-01-14",
+      status: "Rejected",
+      views: 0,
+      solves: 0,
+      feedback: "Problem too similar to existing ones"
+    }
+  ];
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'Approved':
+        return <CheckCircle className="h-4 w-4 text-green-500" />;
+      case 'Rejected':
+        return <XCircle className="h-4 w-4 text-red-500" />;
+      case 'Pending Review':
+      case 'Under Review':
+        return <Clock className="h-4 w-4 text-yellow-500" />;
+      case 'Interview Scheduled':
+        return <Calendar className="h-4 w-4 text-blue-500" />;
+      default:
+        return <Clock className="h-4 w-4 text-gray-500" />;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Approved':
+        return 'bg-green-500/10 text-green-500 border-green-500/20';
+      case 'Rejected':
+        return 'bg-red-500/10 text-red-500 border-red-500/20';
+      case 'Pending Review':
+      case 'Under Review':
+        return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
+      case 'Interview Scheduled':
+        return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
+      default:
+        return 'bg-gray-500/10 text-gray-500 border-gray-500/20';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-compliex-dark">
@@ -74,7 +167,6 @@ const Account: React.FC = () => {
             </div>
           </div>
 
-          {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <Card className="bg-compliex-dark-lighter border-compliex-gray-dark">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -117,11 +209,17 @@ const Account: React.FC = () => {
             </Card>
           </div>
 
-          {/* Tabs Section */}
+          {/* Updated Tabs Section */}
           <Tabs defaultValue="activity" className="space-y-6">
             <TabsList className="bg-compliex-dark-lighter border border-compliex-gray-dark">
               <TabsTrigger value="activity" className="data-[state=active]:bg-compliex-red data-[state=active]:text-white">
                 Recent Activity
+              </TabsTrigger>
+              <TabsTrigger value="applications" className="data-[state=active]:bg-compliex-red data-[state=active]:text-white">
+                My Applications
+              </TabsTrigger>
+              <TabsTrigger value="problems" className="data-[state=active]:bg-compliex-red data-[state=active]:text-white">
+                My Problems
               </TabsTrigger>
               <TabsTrigger value="skills" className="data-[state=active]:bg-compliex-red data-[state=active]:text-white">
                 Skills
@@ -160,6 +258,94 @@ const Account: React.FC = () => {
                           <Badge className="bg-compliex-red text-white">
                             +{activity.points} pts
                           </Badge>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="applications">
+              <Card className="bg-compliex-dark-lighter border-compliex-gray-dark">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle className="text-white">My Job Applications</CardTitle>
+                  <Button variant="outline" className="bg-transparent border-compliex-gray-dark text-white hover:bg-compliex-gray-dark" asChild>
+                    <Link to="/jobs">
+                      <Briefcase className="h-4 w-4 mr-2" />
+                      Browse Jobs
+                    </Link>
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {jobApplications.map((application) => (
+                      <div key={application.id} className="p-4 bg-compliex-dark rounded-lg border border-compliex-gray-dark">
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h4 className="text-white font-medium mb-1">{application.jobTitle}</h4>
+                            <p className="text-gray-300 text-sm">{application.company}</p>
+                            <p className="text-gray-400 text-xs">{application.location}</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            {getStatusIcon(application.status)}
+                            <Badge className={getStatusColor(application.status)}>
+                              {application.status}
+                            </Badge>
+                          </div>
+                        </div>
+                        <div className="text-gray-400 text-xs">
+                          Applied on {new Date(application.appliedDate).toLocaleDateString()}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="problems">
+              <Card className="bg-compliex-dark-lighter border-compliex-gray-dark">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle className="text-white">My Created Problems</CardTitle>
+                  <Button variant="outline" className="bg-transparent border-compliex-gray-dark text-white hover:bg-compliex-gray-dark" asChild>
+                    <Link to="/create-problem">
+                      <FileText className="h-4 w-4 mr-2" />
+                      Create Problem
+                    </Link>
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {createdProblems.map((problem) => (
+                      <div key={problem.id} className="p-4 bg-compliex-dark rounded-lg border border-compliex-gray-dark">
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h4 className="text-white font-medium mb-1">{problem.title}</h4>
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge variant="outline" className="border-compliex-gray-dark text-gray-300">
+                                {problem.difficulty}
+                              </Badge>
+                              <div className="flex items-center gap-2">
+                                {getStatusIcon(problem.status)}
+                                <Badge className={getStatusColor(problem.status)}>
+                                  {problem.status}
+                                </Badge>
+                              </div>
+                            </div>
+                            {problem.feedback && (
+                              <p className="text-red-400 text-sm">{problem.feedback}</p>
+                            )}
+                          </div>
+                          {problem.status === 'Approved' && (
+                            <div className="text-right text-sm">
+                              <div className="text-gray-300">{problem.views} views</div>
+                              <div className="text-gray-300">{problem.solves} solves</div>
+                            </div>
+                          )}
+                        </div>
+                        <div className="text-gray-400 text-xs">
+                          Submitted on {new Date(problem.submittedDate).toLocaleDateString()}
                         </div>
                       </div>
                     ))}
