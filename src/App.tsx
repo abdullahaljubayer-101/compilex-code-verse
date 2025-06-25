@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,6 +32,18 @@ import CreateJob from "./company/pages/CreateJob";
 import ApplicantList from "./company/pages/ApplicantList";
 import ApplicantDetail from "./company/pages/ApplicantDetail";
 import CompanyProfile from "./company/pages/CompanyProfile";
+
+// Admin Portal Imports
+import AdminSignIn from "./admin/pages/AdminSignIn";
+import AdminDashboard from "./admin/pages/AdminDashboard";
+import AdminProblems from "./admin/pages/AdminProblems";
+import AdminProblemDetail from "./admin/pages/AdminProblemDetail";
+import AdminCreateProblem from "./admin/pages/AdminCreateProblem";
+import AdminApproveProblems from "./admin/pages/AdminApproveProblems";
+import AdminCourses from "./admin/pages/AdminCourses";
+import AdminCreateCourse from "./admin/pages/AdminCreateCourse";
+import AdminTutorials from "./admin/pages/AdminTutorials";
+import AdminJobs from "./admin/pages/AdminJobs";
 
 const queryClient = new QueryClient();
 
@@ -72,6 +83,34 @@ const App = () => (
           <Route path="/company/applicants" element={<ApplicantList />} />
           <Route path="/company/applicants/:id" element={<ApplicantDetail />} />
           <Route path="/company/profile" element={<CompanyProfile />} />
+          
+          {/* Admin Portal Routes */}
+          <Route path="/admin/signin" element={<AdminSignIn />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          
+          {/* Problem Management */}
+          <Route path="/admin/problems" element={<AdminProblems />} />
+          <Route path="/admin/problems/:id" element={<AdminProblemDetail />} />
+          <Route path="/admin/problems/:id/edit" element={<AdminProblemDetail />} />
+          <Route path="/admin/problems/create" element={<AdminCreateProblem />} />
+          <Route path="/admin/problems/approve" element={<AdminApproveProblems />} />
+          
+          {/* Course Management */}
+          <Route path="/admin/courses" element={<AdminCourses />} />
+          <Route path="/admin/courses/:id" element={<AdminCourses />} />
+          <Route path="/admin/courses/:id/edit" element={<AdminCourses />} />
+          <Route path="/admin/courses/create" element={<AdminCreateCourse />} />
+          
+          {/* Tutorial Management */}
+          <Route path="/admin/tutorials" element={<AdminTutorials />} />
+          <Route path="/admin/tutorials/:id" element={<AdminTutorials />} />
+          <Route path="/admin/tutorials/:id/edit" element={<AdminTutorials />} />
+          <Route path="/admin/tutorials/create" element={<AdminTutorials />} />
+          <Route path="/admin/tutorials/approve" element={<AdminTutorials />} />
+          
+          {/* Job Management */}
+          <Route path="/admin/jobs" element={<AdminJobs />} />
+          <Route path="/admin/jobs/:id" element={<AdminJobs />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
