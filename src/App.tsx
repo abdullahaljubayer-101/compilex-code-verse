@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -38,9 +39,12 @@ import AdminSignIn from "./admin/pages/AdminSignIn";
 import AdminDashboard from "./admin/pages/AdminDashboard";
 import AdminProblems from "./admin/pages/AdminProblems";
 import AdminProblemDetail from "./admin/pages/AdminProblemDetail";
+import AdminProblemEdit from "./admin/pages/AdminProblemEdit";
 import AdminCreateProblem from "./admin/pages/AdminCreateProblem";
 import AdminApproveProblems from "./admin/pages/AdminApproveProblems";
 import AdminCourses from "./admin/pages/AdminCourses";
+import AdminCourseDetail from "./admin/pages/AdminCourseDetail";
+import AdminCourseEdit from "./admin/pages/AdminCourseEdit";
 import AdminCreateCourse from "./admin/pages/AdminCreateCourse";
 import AdminTutorials from "./admin/pages/AdminTutorials";
 import AdminJobs from "./admin/pages/AdminJobs";

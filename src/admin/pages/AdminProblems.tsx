@@ -19,8 +19,7 @@ import {
 const AdminProblems: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
-
-  const problems = [
+  const [problems, setProblems] = useState([
     {
       id: 1,
       title: 'Two Sum',
@@ -61,7 +60,7 @@ const AdminProblems: React.FC = () => {
       submissions: 0,
       createdAt: '2024-01-18'
     },
-  ];
+  ]);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -80,6 +79,23 @@ const AdminProblems: React.FC = () => {
       default: return 'bg-gray-500/20 text-gray-400';
     }
   };
+
+  const handleDeleteProblem = (id: number) => {
+    if (window.confirm('Are you sure you want to delete this problem?')) {
+      setProblems(problems.filter(problem => problem.id !== id));
+      console.log('Problem deleted:', id);
+    }
+  };
+
+  const filteredProblems = problems.filter(problem => {
+    const matchesSearch = problem.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         problem.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         problem.category.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesStatus = filterStatus === 'all' || problem.status === filterStatus;
+    
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className="min-h-screen bg-compliex-dark">
@@ -118,20 +134,30 @@ const AdminProblems: React.FC = () => {
                 <Button
                   variant={filterStatus === 'all' ? 'default' : 'outline'}
                   onClick={() => setFilterStatus('all')}
+                  className={filterStatus === 'all' ? 'bg-compliex-red hover:bg-compliex-red-dark' : ''}
                 >
-                  All
+                  All ({problems.length})
                 </Button>
                 <Button
                   variant={filterStatus === 'approved' ? 'default' : 'outline'}
                   onClick={() => setFilterStatus('approved')}
+                  className={filterStatus === 'approved' ? 'bg-compliex-red hover:bg-compliex-red-dark' : ''}
                 >
-                  Approved
+                  Approved ({problems.filter(p => p.status === 'approved').length})
                 </Button>
                 <Button
                   variant={filterStatus === 'pending' ? 'default' : 'outline'}
                   onClick={() => setFilterStatus('pending')}
+                  className={filterStatus === 'pending' ? 'bg-compliex-red hover:bg-compliex-red-dark' : ''}
                 >
-                  Pending
+                  Pending ({problems.filter(p => p.status === 'pending').length})
+                </Button>
+                <Button
+                  variant={filterStatus === 'rejected' ? 'default' : 'outline'}
+                  onClick={() => setFilterStatus('rejected')}
+                  className={filterStatus === 'rejected' ? 'bg-compliex-red hover:bg-compliex-red-dark' : ''}
+                >
+                  Rejected ({problems.filter(p => p.status === 'rejected').length})
                 </Button>
               </div>
             </div>
@@ -141,7 +167,9 @@ const AdminProblems: React.FC = () => {
         {/* Problems Table */}
         <Card className="bg-compliex-dark-lighter border-compliex-gray-dark">
           <CardHeader>
-            <CardTitle className="text-white">Problems List</CardTitle>
+            <CardTitle className="text-white">
+              Problems List ({filteredProblems.length} of {problems.length})
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <Table>
@@ -157,41 +185,54 @@ const AdminProblems: React.FC = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {problems.map((problem) => (
-                  <TableRow key={problem.id} className="border-compliex-gray-dark">
-                    <TableCell className="text-white font-medium">{problem.title}</TableCell>
-                    <TableCell>
-                      <Badge className={getDifficultyColor(problem.difficulty)}>
-                        {problem.difficulty}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-gray-300">{problem.category}</TableCell>
-                    <TableCell>
-                      <Badge className={getStatusColor(problem.status)}>
-                        {problem.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-gray-300">{problem.author}</TableCell>
-                    <TableCell className="text-gray-300">{problem.submissions}</TableCell>
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="ghost" asChild>
-                          <Link to={`/admin/problems/${problem.id}`}>
-                            <Eye className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                        <Button size="sm" variant="ghost" asChild>
-                          <Link to={`/admin/problems/${problem.id}/edit`}>
-                            <Edit className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                        <Button size="sm" variant="ghost" className="text-red-400 hover:text-red-300">
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
+                {filteredProblems.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center text-gray-400 py-8">
+                      No problems found matching your criteria
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  filteredProblems.map((problem) => (
+                    <TableRow key={problem.id} className="border-compliex-gray-dark">
+                      <TableCell className="text-white font-medium">{problem.title}</TableCell>
+                      <TableCell>
+                        <Badge className={getDifficultyColor(problem.difficulty)}>
+                          {problem.difficulty}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-gray-300">{problem.category}</TableCell>
+                      <TableCell>
+                        <Badge className={getStatusColor(problem.status)}>
+                          {problem.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-gray-300">{problem.author}</TableCell>
+                      <TableCell className="text-gray-300">{problem.submissions}</TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button size="sm" variant="ghost" asChild>
+                            <Link to={`/admin/problems/${problem.id}`}>
+                              <Eye className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                          <Button size="sm" variant="ghost" asChild>
+                            <Link to={`/admin/problems/${problem.id}/edit`}>
+                              <Edit className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="ghost" 
+                            className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                            onClick={() => handleDeleteProblem(problem.id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </CardContent>
