@@ -18,11 +18,21 @@ import SignUp from "./pages/SignUp";
 import Account from "./pages/Account";
 import Settings from "./pages/Settings";
 import CreateProblem from "./pages/CreateProblem";
+import CreateTutorial from "./pages/CreateTutorial";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
+
+// Company Portal Imports
+import CompanySignIn from "./company/pages/CompanySignIn";
+import CompanySignUp from "./company/pages/CompanySignUp";
+import CompanyDashboard from "./company/pages/CompanyDashboard";
+import CreateJob from "./company/pages/CreateJob";
+import ApplicantList from "./company/pages/ApplicantList";
+import ApplicantDetail from "./company/pages/ApplicantDetail";
+import CompanyProfile from "./company/pages/CompanyProfile";
 
 const queryClient = new QueryClient();
 
@@ -47,10 +57,22 @@ const App = () => (
           <Route path="/account" element={<Account />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/create-problem" element={<CreateProblem />} />
+          <Route path="/create-tutorial" element={<CreateTutorial />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
+          
+          {/* Company Portal Routes */}
+          <Route path="/company/signin" element={<CompanySignIn />} />
+          <Route path="/company/signup" element={<CompanySignUp />} />
+          <Route path="/company/dashboard" element={<CompanyDashboard />} />
+          <Route path="/company/create-job" element={<CreateJob />} />
+          <Route path="/company/jobs" element={<CompanyDashboard />} />
+          <Route path="/company/applicants" element={<ApplicantList />} />
+          <Route path="/company/applicants/:id" element={<ApplicantDetail />} />
+          <Route path="/company/profile" element={<CompanyProfile />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

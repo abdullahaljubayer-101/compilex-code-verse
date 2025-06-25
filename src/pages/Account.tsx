@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { User, Mail, Calendar, Trophy, BookOpen, Code, Settings, LogOut, Briefcase, FileText, Clock, CheckCircle, XCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -60,7 +59,6 @@ const Account: React.FC = () => {
     }
   ];
 
-  // Mock created problems data
   const createdProblems = [
     {
       id: 1,
@@ -89,6 +87,38 @@ const Account: React.FC = () => {
       views: 0,
       solves: 0,
       feedback: "Problem too similar to existing ones"
+    }
+  ];
+
+  // Mock created tutorials data
+  const createdTutorials = [
+    {
+      id: 1,
+      title: "Introduction to React Hooks",
+      difficulty: "Beginner",
+      submittedDate: "2024-01-20",
+      status: "Approved",
+      views: 342,
+      estimatedTime: "15 minutes"
+    },
+    {
+      id: 2,
+      title: "Advanced TypeScript Patterns",
+      difficulty: "Advanced",
+      submittedDate: "2024-01-18",
+      status: "Pending Review",
+      views: 0,
+      estimatedTime: "25 minutes"
+    },
+    {
+      id: 3,
+      title: "Getting Started with Node.js",
+      difficulty: "Intermediate",
+      submittedDate: "2024-01-15",
+      status: "Rejected",
+      views: 0,
+      estimatedTime: "20 minutes",
+      feedback: "Content needs more practical examples"
     }
   ];
 
@@ -209,7 +239,7 @@ const Account: React.FC = () => {
             </Card>
           </div>
 
-          {/* Updated Tabs Section */}
+          {/* Updated Tabs Section with My Tutorials */}
           <Tabs defaultValue="activity" className="space-y-6">
             <TabsList className="bg-compliex-dark-lighter border border-compliex-gray-dark">
               <TabsTrigger value="activity" className="data-[state=active]:bg-compliex-red data-[state=active]:text-white">
@@ -220,6 +250,9 @@ const Account: React.FC = () => {
               </TabsTrigger>
               <TabsTrigger value="problems" className="data-[state=active]:bg-compliex-red data-[state=active]:text-white">
                 My Problems
+              </TabsTrigger>
+              <TabsTrigger value="tutorials" className="data-[state=active]:bg-compliex-red data-[state=active]:text-white">
+                My Tutorials
               </TabsTrigger>
               <TabsTrigger value="skills" className="data-[state=active]:bg-compliex-red data-[state=active]:text-white">
                 Skills
@@ -346,6 +379,59 @@ const Account: React.FC = () => {
                         </div>
                         <div className="text-gray-400 text-xs">
                           Submitted on {new Date(problem.submittedDate).toLocaleDateString()}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* New My Tutorials Tab */}
+            <TabsContent value="tutorials">
+              <Card className="bg-compliex-dark-lighter border-compliex-gray-dark">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle className="text-white">My Created Tutorials</CardTitle>
+                  <Button variant="outline" className="bg-transparent border-compliex-gray-dark text-white hover:bg-compliex-gray-dark" asChild>
+                    <Link to="/create-tutorial">
+                      <BookOpen className="h-4 w-4 mr-2" />
+                      Create Tutorial
+                    </Link>
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {createdTutorials.map((tutorial) => (
+                      <div key={tutorial.id} className="p-4 bg-compliex-dark rounded-lg border border-compliex-gray-dark">
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h4 className="text-white font-medium mb-1">{tutorial.title}</h4>
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge variant="outline" className="border-compliex-gray-dark text-gray-300">
+                                {tutorial.difficulty}
+                              </Badge>
+                              <Badge variant="outline" className="border-compliex-gray-dark text-gray-300">
+                                {tutorial.estimatedTime}
+                              </Badge>
+                              <div className="flex items-center gap-2">
+                                {getStatusIcon(tutorial.status)}
+                                <Badge className={getStatusColor(tutorial.status)}>
+                                  {tutorial.status}
+                                </Badge>
+                              </div>
+                            </div>
+                            {tutorial.feedback && (
+                              <p className="text-red-400 text-sm">{tutorial.feedback}</p>
+                            )}
+                          </div>
+                          {tutorial.status === 'Approved' && (
+                            <div className="text-right text-sm">
+                              <div className="text-gray-300">{tutorial.views} views</div>
+                            </div>
+                          )}
+                        </div>
+                        <div className="text-gray-400 text-xs">
+                          Submitted on {new Date(tutorial.submittedDate).toLocaleDateString()}
                         </div>
                       </div>
                     ))}
